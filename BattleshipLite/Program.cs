@@ -14,10 +14,11 @@ namespace BattleShipLite
         static void Main(string[] args)
         {
             WellcomeMessage();
-            
+            HowToPlayWiki();
             PlayerInfoModel activePlayer = CreatePlayer("Player 1");
             PlayerInfoModel opponent = CreatePlayer("Player 2");
             PlayerInfoModel winner = null;
+            
 
             do
             {
@@ -25,7 +26,7 @@ namespace BattleShipLite
                 Console.WriteLine(" vv  vv  vv  vv  vv");
 
                 DisplayShotGrid(activePlayer);
-                
+
                 Console.WriteLine();
                 Console.WriteLine();
 
@@ -35,7 +36,7 @@ namespace BattleShipLite
 
                 if (doesGameContinues == true)
                 {
-                    (activePlayer,opponent) = (opponent,activePlayer);
+                    (activePlayer, opponent) = (opponent, activePlayer);
                 }
                 else
                 {
@@ -44,9 +45,22 @@ namespace BattleShipLite
 
             } while (winner == null);
 
-            IdentifyWinner(winner);
+            IdentifyWinner(winner); 
 
             Console.ReadLine();
+        }
+
+        private static void HowToPlayWiki()
+        {
+            Console.WriteLine("  Game Is About Strategy. You Have 5 Ships Which You Can Place In Desired Location In Given Grid.");
+            Console.WriteLine("  Main Goal To Destroy Enemy's Ships Before They Do... Good Luck! ");
+            Console.WriteLine();
+            Console.WriteLine("Symbol Meanings ");
+
+            Console.WriteLine("  Hit - X    Miss - O");
+            Console.WriteLine();
+            Console.WriteLine();
+
         }
 
         private static void IdentifyWinner(PlayerInfoModel winner)
@@ -101,7 +115,7 @@ namespace BattleShipLite
         private static string AskForShot(PlayerInfoModel activePlayer)
         {
             Console.Write($"{activePlayer.UsersName}, please Enter Your Shot Selection: ");
-            string output = Console.ReadLine();
+            string output = Console.ReadLine().ToUpper();
             return output;
         }
 
@@ -140,12 +154,14 @@ namespace BattleShipLite
         {
             Console.WriteLine("Welcome To BattleShip Lite");
             Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
         }
         private static PlayerInfoModel CreatePlayer(string playerTitle)
         {
             PlayerInfoModel player = new PlayerInfoModel();
 
-            Console.WriteLine($"Player Information For {playerTitle}");
+            Console.WriteLine($"Player Information - {playerTitle}");
             
             player.UsersName = AskForUsersName();
 
@@ -160,7 +176,7 @@ namespace BattleShipLite
         }
         private static string AskForUsersName()
         {
-            Console.Write("What Is Your Name: ");
+            Console.Write("Please Input Your Username: ");
             string name = Console.ReadLine();
             return name;
 
