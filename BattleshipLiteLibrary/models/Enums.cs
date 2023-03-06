@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BattleshipLiteLibrary.models
 {
-    internal class Enums
+    public enum GridSpotStatus
     {
+        Empty,
+        Ship,
+        Miss,
+        Hit,
+        Sunk,
     }
 }
