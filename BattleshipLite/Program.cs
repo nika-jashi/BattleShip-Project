@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BattleshipLiteLibrary;
@@ -18,12 +19,10 @@ namespace BattleShipLite
             PlayerInfoModel activePlayer = CreatePlayer("Player 1");
             PlayerInfoModel opponent = CreatePlayer("Player 2");
             PlayerInfoModel winner = null;
-            
-
             do
             {
-                Console.WriteLine($"Opponent Board <{opponent.UsersName}>");
-                Console.WriteLine(" vv  vv  vv  vv  vv");
+                Console.WriteLine($"Opponent Board <{opponent.UserName}>");
+                Console.WriteLine("-------------------------------------");
 
                 DisplayShotGrid(activePlayer);
 
@@ -52,7 +51,7 @@ namespace BattleShipLite
 
         private static void HowToPlayWiki()
         {
-            Console.WriteLine("  Game Is About Strategy. You Have 5 Ships Which You Can Place In Desired Location In Given Grid.");
+            Console.WriteLine("  Game Is About Strategy. You Have 6 Ships Which You Can Place In Desired Location In Given Grid.");
             Console.WriteLine("  Main Goal To Destroy Enemy's Ships Before They Do... Good Luck! ");
             Console.WriteLine();
             Console.WriteLine("Symbol Meanings ");
@@ -65,8 +64,8 @@ namespace BattleShipLite
 
         private static void IdentifyWinner(PlayerInfoModel winner)
         {
-            Console.WriteLine($"Congratulations To {winner.UsersName} For Winning!");
-            Console.WriteLine($"{winner.UsersName} Took { GameLogic.GetShotCount(winner) } Shots.");
+            Console.WriteLine($"Congratulations To {winner.UserName} For Winning!");
+            Console.WriteLine($"{winner.UserName} Took { GameLogic.GetShotCount(winner) } Shots.");
         }
 
         private static void RecordPlayerShot(PlayerInfoModel activePlayer, PlayerInfoModel opponent)
@@ -90,7 +89,7 @@ namespace BattleShipLite
                 }
                 if (isValidShot == false)
                 {
-                    Console.WriteLine("Invalid Shot Location. Please Try Again");
+                    Console.WriteLine($"{row.ToUpper()}{collumn} Was Invalid Shot Location. Please Try Again");
                 }
             } while (isValidShot == false);
             bool isAHit = GameLogic.IdentifyShotResult(opponent,row,collumn);
@@ -114,7 +113,7 @@ namespace BattleShipLite
 
         private static string AskForShot(PlayerInfoModel activePlayer)
         {
-            Console.Write($"{activePlayer.UsersName}, please Enter Your Shot Selection: ");
+            Console.Write($"{activePlayer.UserName}, please Enter Your Shot Selection: ");
             string output = Console.ReadLine().ToUpper();
             return output;
         }
@@ -163,13 +162,19 @@ namespace BattleShipLite
 
             Console.WriteLine($"Player Information - {playerTitle}");
             
-            player.UsersName = AskForUsersName();
+            player.UserName = AskForUsersName();
 
             GameLogic.InitializeGrid(player);
 
-            PlaceShips(player);
-
             Console.Clear();
+            Console.WriteLine();
+            DisplayShotGrid(player);
+            Console.WriteLine();
+            Console.WriteLine();
+            PlaceShips(player);
+            DisplayShotGrid(player);
+            Console.Clear();
+
 
             return player;
 
@@ -183,10 +188,12 @@ namespace BattleShipLite
         }
         private static void PlaceShips(PlayerInfoModel model)
         {
+            Console.WriteLine("Preparation For Battle...");
+            Console.WriteLine();
             do
             {
-                Console.Write($"Where Do You Want To Place Ship { model.ShipLocations.Count + 1 } : ");
-                string location = Console.ReadLine();
+                Console.Write($"Where Do You Want To Place Ship <{ model.ShipLocations.Count + 1 }> : ");
+                string location = Console.ReadLine().ToUpper();
                 bool isValidLocation = false;
                 try
                 {
@@ -199,10 +206,10 @@ namespace BattleShipLite
                 }
                 if (isValidLocation == false)
                 {
-                    Console.WriteLine("That Was Not A Valid Location. Please try Again.");
+                    Console.WriteLine($"{location} Was Not A Valid Location. Please try Again.");
                 }
 
-            } while (model.ShipLocations.Count < 5);
+            } while (model.ShipLocations.Count < 6);
         }
     }
 }

@@ -21,7 +21,8 @@ namespace BattleshipLiteLibrary
                 "B",
                 "C",
                 "D",
-                "E"
+                "E",
+                "F",
             };
             List<int> numbers = new List<int>()
             {
@@ -29,7 +30,8 @@ namespace BattleshipLiteLibrary
                 2,
                 3,
                 4,
-                5
+                5,
+                6,
             };
             foreach (string letter in letters)
             {
